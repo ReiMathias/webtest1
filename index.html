@@ -30,13 +30,13 @@
 <body>
     <h1>Random Group Generator</h1>
 
-    <label>Enter names (one per line):</label>
+    <label>Skriv inn navnene (et navn per linje):</label>
     <textarea id="names" rows="10"></textarea>
 
-    <label>Number of groups:</label>
+    <label>Antall grupper:</label>
     <input type="number" id="groupCount" value="2" min="1">
 
-    <button onclick="generateGroups()">Generate Groups</button>
+    <button onclick="generateGroups()">Generer grupper</button>
 
     <div id="results"></div>
 
@@ -51,7 +51,7 @@
             const groupCount = parseInt(document.getElementById("groupCount").value);
 
             if (names.length === 0 || groupCount < 1) {
-                alert("Please enter names and a valid number of groups.");
+                alert("Vennligst skriv inn navn og et gyldig antall grupper.");
                 return;
             }
 
@@ -73,7 +73,7 @@
             groups.forEach((group, index) => {
                 const div = document.createElement("div");
                 div.className = "group";
-                div.innerHTML = `<h3>Group ${index + 1}</h3><p>${group.join(", ")}</p>`;
+                div.innerHTML = `<h3>Gruppe ${index + 1}</h3><p>${group.join(", ")}</p>`;
                 results.appendChild(div);
             });
         }
