@@ -2,11 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GFG</title>
+    <title>Random Group Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        textarea, input, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .group {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World this is my first web page.</h1>
+    <h1>Random Group Generator</h1>
+
+    <label>Enter names (one per line):</label>
+    <textarea id="names" rows="10"></textarea>
+
+    <label>Number of groups:</label>
+    <input type="number" id="groupCount" value="2" min="1">
+
+    <button onclick="generateGroups()">Generate Groups</button>
+
+    <div id="results"></div>
+
+    <script>
+        function generateGroups() {
+            const names = document.getElementById("names")
+                .value
+                .split("\n")
+                .map(name => name.trim())
+                .filter(name => name);
+
+            const groupCount = parseInt(document.getElementById("groupCount").value);
+
+            if (names.length === 0 || groupCount < 1) {
+                alert("Please enter names and a valid number of groups.");
+                return;
+            }
+
+            // Shuffle names
+            for (let i = names.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [names[i], names[j]] = [names[j], names[i]];
+            }
+
+            const groups = Array.from({ length: groupCount }, () => []);
+
+            names.forEach((name, index) => {
+                groups[index % groupCount].push(name);
+            });
+
+            const results = document.getElementById("results");
+            results.innerHTML = "";
+
+            groups.forEach((group, index) => {
+                const div = document.createElement("div");
+                div.className = "group";
+                div.innerHTML = `<h3>Group ${index + 1}</h3><p>${group.join(", ")}</p>`;
+                results.appendChild(div);
+            });
+        }
+    </script>
 </body>
 </html>
